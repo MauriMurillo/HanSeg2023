@@ -6,7 +6,7 @@ OUTDIR=$SCRIPTPATH/output
 ./build.sh
 
 # Maximum is currently 30g, configurable in your algorithm image settings on grand challenge
-MEM_LIMIT="4g"
+MEM_LIMIT="12g"
 
 # create output dir if it does not exist
 if [ ! -d $OUTDIR ]; then
@@ -25,11 +25,3 @@ docker run --rm \
         -v $SCRIPTPATH/test/:/input/ \
         -v $OUTDIR:/output/ \
         hanseg2023algorithm
-
-
-echo
-echo
-echo "Compare files in $OUTDIR with the expected results to see if test is successful"
-docker run --rm \
-        -v $OUTDIR:/output/ \
-        python:3.8-slim ls -al /output/images/head_neck_oar

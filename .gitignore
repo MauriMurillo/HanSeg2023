@@ -113,3 +113,5 @@ test_local.sh
 *.mha
 output/*
 test/*
+.DS_Store
+nnUNet/**

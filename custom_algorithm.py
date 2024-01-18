@@ -65,8 +65,8 @@ class HanSegUniqueImagesValidator(DataFrameValidator):
 class Hanseg2023Algorithm(SegmentationAlgorithm):
     def __init__(
         self,
-        input_path=Path("/input/images/"),
-        output_path=Path("/output/images/head_neck_oar/"),
+        input_path=Path("./input/images/"),
+        output_path=Path("./output/images/head_neck_oar/"),
         **kwargs,
     ):
         super().__init__(
