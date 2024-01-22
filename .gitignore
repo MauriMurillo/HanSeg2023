@@ -115,3 +115,4 @@ output/*
 test/*
 .DS_Store
 nnUNet/**
+nnUNet*

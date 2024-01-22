@@ -162,3 +162,4 @@ class MyHanseg2023Algorithm(Hanseg2023Algorithm):
 
 if __name__ == "__main__":
     MyHanseg2023Algorithm().process()
+ 
