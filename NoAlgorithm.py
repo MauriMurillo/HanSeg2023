@@ -7,8 +7,8 @@ from nnunetv2.inference.predict_from_raw_data import nnUNetPredictor
 class Hanseg2023Algorithm:
     def __init__(
         self,
-        input_path="/Users/mauriciomurillogonzales/Documents/GrandChallenge/HanSeg2023/input/images/ct",
-        output_path="/Users/mauriciomurillogonzales/Documents/GrandChallenge/HanSeg2023/output",
+        input_path="./input/images/ct",
+        output_path="./output",
     ):
         self.input_path = input_path
         self.output_path = output_path
