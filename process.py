@@ -84,14 +84,14 @@ class MyHanseg2023Algorithm(Hanseg2023Algorithm):
     def __init__(self):
         # instantiate the nnUNetPredictor
         if torch.cuda.is_available():
-            device = torch.device("cuda")
+            device = torch.device("cuda:1")
         else:
             device = torch.device("cpu")
         self.predictor = nnUNetPredictor(
             tile_step_size=0.5,
             use_gaussian=True,
             use_mirroring=True,
-            perform_everything_on_device=False,
+            perform_everything_on_device=True,
             device=device,
             verbose=True,
             verbose_preprocessing=False,
@@ -131,30 +131,21 @@ class MyHanseg2023Algorithm(Hanseg2023Algorithm):
         }
 
         img = np.vstack(images).astype(np.float32)
+        npy_image = None
+        del npy_image
 
+        image_mrt1 = None
         output_seg = self.predictor.predict_single_npy_array(
             img, dict, None, None, False
         )
 
-        # output_seg = output_seg * 100
-        # for key, number in nnUnetDict.items():
-        #     output_seg[output_seg == (number * 100)] = LABEL_dict[key]
+        output_seg = output_seg * 100
+        for key, number in nnUnetDict.items():
+            output_seg[output_seg == (number * 100)] = LABEL_dict[key]
         output_seg = sitk.GetImageFromArray(output_seg)
         output_seg.CopyInformation(image_ct)
 
-        print("Print Data from output segmentation")
-        print(output_seg.shape)
-        print(output_seg.GetDirection)
-        print(output_seg.GetSize)
-        print(output_seg.GetOrigin)
-        print(output_seg.GetSpacing)
 
-        print("Data from image ct")
-        print(image_ct.shape)
-        print(image_ct.GetDirection)
-        print(image_ct.GetSize)
-        print(image_ct.GetOrigin)
-        print(image_ct.GetSpacing)
         # output should be a sitk image with the same size, spacing, origin and direction as the original input image_ct
         output_seg = sitk.Cast(output_seg, sitk.sitkUInt8)
         return output_seg
